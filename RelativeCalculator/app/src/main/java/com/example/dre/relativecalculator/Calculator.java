@@ -11,7 +11,9 @@ public class Calculator extends AppCompatActivity {
     private String display = "";
     private Float operand;
     private Float result = 1.0f;
+    private Float addresult = 0.0f;
     private int loopCount = 0;
+    private int addLoopCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class Calculator extends AppCompatActivity {
         int toggleAdd = -1;
         int toggleSub = -1;
 
+        System.out.println("\nThe ID is: " + v.getTag() + "\n");
+
         // No number has been entered
         if(display.isEmpty()) {
             return;
@@ -59,20 +63,75 @@ public class Calculator extends AppCompatActivity {
             //Parse through the display string to ensure that two numbers and an operand exist in the correct order.
             //Check multiplication first.
             System.out.println("\n\n\n\nGot here!!!");
-            String[] tokens = display.split("X|\\+");
-            for (String token : tokens) {
-                System.out.println(token);
-                result *= operand;
-                loopCount++;
+            String[] tokens = display.split("X|\\+|\\-");
+
+            //Have a switch statement here to handle whether it is multiplication, addition, subtraction, modulus, or division.
+            if(v.getTag().toString().equals("mult")) {
+                System.out.println("\nmult was entered\n");
+                for (String token : tokens) {
+                    System.out.println(token);
+                    result *= Float.parseFloat(token);
+                    loopCount++;
+                }
             }
-            if(loopCount % 2 == 0) {
+            else if(v.getTag().toString().equals("add")) {
+                System.out.println("\nadd was entered\n");
+                for (String token : tokens) {
+                    System.out.println(token);
+                    addresult += Float.parseFloat(token);
+                    System.out.println("\nThe addition result is: " + addresult + "\n");
+                    addLoopCount++;
+                }
+            }
+            else if(v.getTag().toString().equals("sub")) {
+                System.out.println("\nsub was entered\n");
+                for (String token : tokens) {
+                    System.out.println(token);
+                    if(loopCount == 0) {
+                        result = Float.parseFloat(token);
+                    }
+                    else {
+                        result -= Float.parseFloat(token);
+                    }
+                    loopCount++;
+                }
+            }
+            else if(v.getTag().toString().equals("div")) {
+                System.out.println("\ndiv was entered\n");
+                for (String token : tokens) {
+                    System.out.println(token);
+                    result *= operand;
+                    loopCount++;
+                }
+            }
+            else if(v.getTag().toString().equals("mod")) {
+                System.out.println("\nmod was entered\n");
+                for (String token : tokens) {
+                    System.out.println(token);
+                    result *= operand;
+                    loopCount++;
+                }
+            }
+
+            if(loopCount % 2 == 0 && loopCount != 0) {
                 System.out.println("\nGot in the if\n");
                 //This means two numbers have been entered, calculate the result and display it.
                 display = "";
                 display += result;
                 updateScreen();
+                //Reset loopCount to 0, otherwise there can be errors when you try to add after multiplying, etc.
+                loopCount = 0;
             }
-
+            //Need a different one here because we need to add result or addresult depending.
+            else if(addLoopCount % 2 == 0 && addLoopCount != 0) {
+                System.out.println("\nGot in the if\n");
+                //This means two numbers have been entered, calculate the result and display it.
+                display = "";
+                display += addresult;
+                updateScreen();
+                //Reset addLoopCount to 0 here as well.
+                addLoopCount = 0;
+            }
         }
 
 

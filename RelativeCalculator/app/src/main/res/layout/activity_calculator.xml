@@ -129,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onClickOp"
+                android:tag="mult"
                 android:text="X" />
 
             <Button
@@ -190,6 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onClickOp"
+                android:tag="sub"
                 android:text="-" />
 
             <Button
@@ -198,6 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onClickOp"
+                android:tag="add"
                 android:text="+" />
 
             <Button
