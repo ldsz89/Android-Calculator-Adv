@@ -108,6 +108,7 @@ public class Calculator extends AppCompatActivity {
                             System.out.println("\nGot to divide by 0 error.");
                             System.out.println("\n" + Float.parseFloat(token) + "\n");
                             display = "CANNOT DIVIDE BY 0!!!";
+                            //Fix the issue in which the appended operation stll appears. Maybe use a GOTO just this once to break to the end of the function? Using return; doesn't work, and break; still has it stay there.
                             break;
                         }
                         result /= Float.parseFloat(token);
