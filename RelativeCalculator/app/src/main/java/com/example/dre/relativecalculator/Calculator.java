@@ -63,7 +63,7 @@ public class Calculator extends AppCompatActivity {
             //Parse through the display string to ensure that two numbers and an operand exist in the correct order.
             //Check multiplication first.
             System.out.println("\n\n\n\nGot here!!!");
-            String[] tokens = display.split("X|\\+|\\-");
+            String[] tokens = display.split("X|\\+|\\-|\\/");
 
             //Have a switch statement here to handle whether it is multiplication, addition, subtraction, modulus, or division.
             if(v.getTag().toString().equals("mult")) {
@@ -97,10 +97,21 @@ public class Calculator extends AppCompatActivity {
                 }
             }
             else if(v.getTag().toString().equals("div")) {
-                System.out.println("\ndiv was entered\n");
+                System.out.println("\nmod was entered\n");
                 for (String token : tokens) {
                     System.out.println(token);
-                    result *= operand;
+                    if(loopCount == 0) {
+                        result = Float.parseFloat(token);
+                    }
+                    else {
+                        if(Float.parseFloat(token) == 0) {
+                            System.out.println("\nGot to divide by 0 error.");
+                            System.out.println("\n" + Float.parseFloat(token) + "\n");
+                            display = "CANNOT DIVIDE BY 0!!!";
+                            break;
+                        }
+                        result /= Float.parseFloat(token);
+                    }
                     loopCount++;
                 }
             }
