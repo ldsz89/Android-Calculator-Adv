@@ -14,6 +14,7 @@ public class Calculator extends AppCompatActivity {
     private Float addresult = 0.0f;
     private int loopCount = 0;
     private int addLoopCount = 0;
+    private String operation = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class Calculator extends AppCompatActivity {
         display = "";
         _screen.setText(display);
         operand = null;
+        operation = "";
     }
 
     protected void updateScreen() {
@@ -40,6 +42,9 @@ public class Calculator extends AppCompatActivity {
         display = "";
         updateScreen();
         operand = null;
+        loopCount = 0;
+        addLoopCount = 0;
+        operation = "";
     }
 
     public void onClickOp (View v) {
@@ -57,6 +62,20 @@ public class Calculator extends AppCompatActivity {
         // Display is not empty and operand has not been set, set operand
         if(operand == null) {
             operand = Float.parseFloat(display.toString());
+            switch (v.getTag().toString()) {
+                case "add":
+                    operation = "add";
+                    break;
+                case "sub":
+                    operation = "sub";
+                    break;
+                case "mult":
+                    operation = "mult";
+                    break;
+                case "div":
+                    operation = "div";
+                    break;
+            }
         }
         else if(operand != null) {
             // Operand has been set, perform operation
@@ -68,20 +87,24 @@ public class Calculator extends AppCompatActivity {
             //Have a switch statement here to handle whether it is multiplication, addition, subtraction, modulus, or division.
             if(v.getTag().toString().equals("mult")) {
                 System.out.println("\nmult was entered\n");
-                for (String token : tokens) {
-                    System.out.println(token);
-                    result *= Float.parseFloat(token);
-                    loopCount++;
-                }
+//                for (String token : tokens) {
+//                    System.out.println(token);
+//                    result *= Float.parseFloat(token);
+//                    loopCount++;
+//                }
+                result = Float.parseFloat(tokens[0]) * Float.parseFloat(tokens[1]);
+                loopCount = 2;
             }
             else if(v.getTag().toString().equals("add")) {
                 System.out.println("\nadd was entered\n");
-                for (String token : tokens) {
-                    System.out.println(token);
-                    addresult += Float.parseFloat(token);
-                    System.out.println("\nThe addition result is: " + addresult + "\n");
-                    addLoopCount++;
-                }
+//                for (String token : tokens) {
+//                    System.out.println(token);
+//                    addresult += Float.parseFloat(token);
+//                    System.out.println("\nThe addition result is: " + addresult + "\n");
+//                    addLoopCount++;
+//                }
+                result = Float.parseFloat(tokens[0]) * Float.parseFloat(tokens[1]);
+                addLoopCount = 2;
             }
             else if(v.getTag().toString().equals("sub")) {
                 System.out.println("\nsub was entered\n");
@@ -155,6 +178,35 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void onClickEquals (View v) {
+        System.out.println("\nGot to Equals fxn\n");
+        // Operation has not been set, calculation cannot be performed
+        if(operation.isEmpty()) {
+            return;
+        }
 
+        String[] tokens = display.split("X|\\+|\\-|\\/|\\%");
+
+        switch (operation.toString()) {
+            case "add":
+                result = Float.parseFloat(tokens[0]) + Float.parseFloat(tokens[1]);
+                break;
+            case "sub":
+                result = Float.parseFloat(tokens[0]) - Float.parseFloat(tokens[1]);
+                break;
+            case "mult":
+                result = Float.parseFloat(tokens[0]) * Float.parseFloat(tokens[1]);
+                break;
+            case "div":
+                result = Float.parseFloat(tokens[0]) / Float.parseFloat(tokens[1]);
+                break;
+            case "mod":
+                result = Float.parseFloat(tokens[0]) % Float.parseFloat(tokens[1]);
+                break;
+        }
+        System.out.println("\nResult: " + result.toString() + "\n");
+        operand = result;
+        display = result.toString();
+        operation = "";
+        updateScreen();
     }
 }
