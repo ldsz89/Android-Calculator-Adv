@@ -71,6 +71,7 @@ public class Calculator extends AppCompatActivity {
                 for (String token : tokens) {
                     System.out.println(token);
                     result *= Float.parseFloat(token);
+                    System.out.println("\nMult is: " + result + "\n");
                     loopCount++;
                 }
             }
@@ -108,7 +109,7 @@ public class Calculator extends AppCompatActivity {
                             System.out.println("\nGot to divide by 0 error.");
                             System.out.println("\n" + Float.parseFloat(token) + "\n");
                             display = "CANNOT DIVIDE BY 0!!!";
-                            //Fix the issue in which the appended operation stll appears. Maybe use a GOTO just this once to break to the end of the function? Using return; doesn't work, and break; still has it stay there.
+                            //Fix the issue in which the appended operation still appears. Maybe use a GOTO just this once to break to the end of the function? Using return; doesn't work, and break; still has it stay there.
                             break;
                         }
                         result /= Float.parseFloat(token);
@@ -133,6 +134,7 @@ public class Calculator extends AppCompatActivity {
                 updateScreen();
                 //Reset loopCount to 0, otherwise there can be errors when you try to add after multiplying, etc.
                 loopCount = 0;
+                //result = 0.0f;
             }
             //Need a different one here because we need to add result or addresult depending.
             else if(addLoopCount % 2 == 0 && addLoopCount != 0) {
@@ -143,6 +145,7 @@ public class Calculator extends AppCompatActivity {
                 updateScreen();
                 //Reset addLoopCount to 0 here as well.
                 addLoopCount = 0;
+                //addresult = 0.0f;
             }
         }
 
@@ -155,6 +158,6 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void onClickEquals (View v) {
-
+        //Will pretty much be the same code as onClickOp, the only difference is that we will not append the new operation.
     }
 }
